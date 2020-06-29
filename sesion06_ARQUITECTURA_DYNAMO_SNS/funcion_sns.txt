@@ -1,0 +1,24 @@
+console.log('Loading function');
+
+var AWS = require('aws-sdk');
+AWS.config.region = 'us-east-2'
+
+
+exports.handler = function(event, context) {
+	
+	console.log("\n\nLoading handler\n\n");
+	var sns = new AWS.SNS();
+	sns.publish({
+		Message: 'hola chicos esto es una prueba',
+		TopicArn: 'arn:aws:sns:us-east-2:410728552766:sns_topico_anita'
+	} , 
+	    function(err, data) {
+		if(err){
+			console.log(err.stack);
+			return;
+		}
+		console.log('push sent');
+		console.log(data);
+		context.done(null, 'function finished');
+	});
+};

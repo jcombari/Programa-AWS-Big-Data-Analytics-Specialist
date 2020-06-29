@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<License xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="urn:simba-com:SimbaLicenseSchema">
+  <Info version="1">
+    <ProductSKU>1153</ProductSKU>
+    <Product>Simba DynamoDB ODBC Driver</Product>
+    <Platform>Windows</Platform>
+    <ProductVersion>1</ProductVersion>
+    <LicenseType>Evaluation</LicenseType>
+    <LicenseCount>3</LicenseCount>
+    <CustomerID>aquevedo@applying.pe</CustomerID>
+    <Timestamp>2020-06-17T14:01:18.617778-07:00</Timestamp>
+    <Expiry>2020-07-07</Expiry>
+  </Info>
+  <Key>rui9ABQAGQDAAAMACwBjAGJdKlWYBx4bSYOPy4baPvGlW2SIsCtlkeP1+yi2VrDfl6v5ZuCcqbRbH01fxTWENbIBHoS3FibqzFup9e4JY9Clb4uO7mN0m7CIZNAvDMdbmgB5Dk57KfNqJqR0kijtwBCEL9qdc+xetIlvWhMn+bbZEBIIAkDMp5bBLFVlHMWOaRDKclBgZNLeGiDbjgtnFGcQ26YQqadvTxWyh+U4zZ7EN0Wh94XUJrRK5nk+3PZbLv9SDj5g5hFIXt8xm1i/dt186tGqn7xLhL+DeiPohVQkbAXO/AIXtUgQirEcjFv5CQ+fZFpdCWOsP5JTYMo7CSekhVDYbx6b</Key>
+</License>

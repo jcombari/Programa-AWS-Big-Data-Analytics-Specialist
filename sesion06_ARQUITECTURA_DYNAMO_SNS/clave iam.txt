@@ -1,0 +1,4 @@
+usuario AKIAV7IKULE7I2CDNYHJ
+contraseña w04TQFJBj2GAwL1oOoHS6yWrWFPmBnzln4fKe36f
+
+C:\Program Files\Simba DynamoDB ODBC Driver\lib
