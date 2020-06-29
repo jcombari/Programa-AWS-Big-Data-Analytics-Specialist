@@ -1,0 +1,56 @@
+aws s3 cp s3://aws-tc-largeobjects/AWS-200-BIG/v3.1/lab-6-spark/scripts/jar/ . --recursive
+
+spark-shell --jars /home/hadoop/minimal-json-0.9.5-SNAPSHOT.jar , /home/hadoop/RedshiftJDBC.jar ,/home/hadoop/spark-avro_2.11-3.0.1.jar,/home/hadoop/spark-redshift_2.11-2.0.1.jar, /home/hadoop/spark-redshift_2.11-3.0.0-preview1 \ --packages com.databricks:spark-redshift_2.11:2.0.1
+
+:require /home/hadoop/spark-redshift_2.11-3.0.0-preview1.jar
+:require /home/hadoop/minimal-json-0.9.5-SNAPSHOT.jar
+:require /home/hadoop/RedshiftJDBC.jar
+:require /home/hadoop/spark-avro_2.11-3.0.1.jar
+:require /home/hadoop/spark-redshift_2.11-2.0.1.jar
+:require /home/hadoop/spark-redshift_2.11-3.0.0-preview1
+
+
+
+
+import org.apache.spark.sql._
+import com.amazonaws.auth._
+val provider = new InstanceProfileCredentialsProvider()
+val credentials: AWSSessionCredentials = provider.getCredentials.asInstanceOf[AWSSessionCredentials]
+val token = credentials.getSessionToken
+val awsAccessKey = credentials.getAWSAccessKeyId
+val awsSecretKey = credentials.getAWSSecretKey
+
+
+val s3_location = "s3://aws-tc-largeobjects/AWS-200-BIG/v3.1/lab-6-spark/processed_data.csv"
+val df = spark.read.option("header","true").option("inferSchema","true").csv(s3_location)
+#df.coalesce(1).write.option("header","true").option("sep",",").mode("overwrite").csv("/home/hadoop/data.csv")
+
+
+df.printSchema()
+df.filter(df("tip_amount") > 0).groupBy("passenger_count").agg(mean("tip_amount")).sort("passenger_count").show()
+df.groupBy("passenger_count").count().sort("passenger_count").show()
+
+df.groupBy("passenger_count").count().sort("passenger_count").show()
+
+
+
+****************************************
+val JDBC = "jdbc:redshift://redshiftclusteraqs.cokql1ivqcfp.us-west-2.redshift.amazonaws.com:5439/dev"
+val jdbc_url ="jdbc:redshift://redshiftclusteraqs.cokql1ivqcfp.us-west-2.redshift.amazonaws.com:5439/dev"+"?user=awsuser&password=Awsuser.C2"
+val temp_dir = "s3://aws-logs-410728552766-us-west-2/elasticmapreduce/"
+
+
+
+
+df.write.format("com.databricks.spark.redshift").option("url",jdbc_url ).option("dbtable","nytaxi").option("tempdir",temp_dir).option("temporary_aws_access_key_id", awsAccessKey).option("temporary_aws_secret_access_key", awsSecretKey).option("temporary_aws_session_token",token).save()
+.format("com.qubole.spark.redshift")
+df.write
+  .format("com.databricks.spark.redshift")
+  .option("url", "jdbc:redshift://redshifthost:5439/database?user=username&password=pass")
+  .option("dbtable", "my_table_copy")
+  .option("tempdir", "s3n://path/for/temp/data")
+  .mode("error")
+  .save()
+
+
+hadoop fs -get hdfspath localpath
